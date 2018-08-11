@@ -7,6 +7,3 @@ FROM mytable
     HAVING constraint_expression
     ORDER BY column ASC/DESC
     LIMIT count OFFSET COUNT;
-	
-	
-	sajin 8776473411 326004
