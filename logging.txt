@@ -1,0 +1,30 @@
+main.java:-
+public static void main(String args[])
+{
+	AnnotationconfigapplicationContext context= new AnnotationconfigapplicationContext(Stringconfig.class);
+	Logger logger =LoggerFactory.getLogger(Application.class);
+	
+	StringModifier modifier = context.getBean(StringModifier.class);
+	String A="hello";
+	String modifiedA= modifier.replaceallA(A);
+	logger.debug("debug message {}",modifiedA);
+	context.close();
+}
+
+log4j.xml:-
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+	<Logger name= "org.suhas." level="debug" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Root level="error">
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+</Configuration>

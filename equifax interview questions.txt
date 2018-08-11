@@ -1,0 +1,109 @@
+1.	About yourself and experience and project
+2.	Difference between path and class path 
+3.	Can main method overload?
+4.	What will happen when use static keyword in main class. Will use static keyword for all classes
+5.	How you create custom exceptions 
+6.	Transient variable 
+7.	Immutable classes
+8.	Volatile keyword 
+9.	How you execute thread 
+10.	Hash map 
+11.	Linked hash map
+12.	Executer Service 
+13.	Difference between comparator and compare To
+14.	Difference between enumerator and iterator 
+15.	Dependency injection in spring
+16.	Context component scan 
+17.	List of view resolvers in spring mvc
+18.	Handler mapping 
+19.	Put vs post 
+20.	Accept header vs content type header
+21.	Filter vs interceptor 
+22.	Java 8 features 
+23.	Class not found exception vs no class definition found 
+24.	Class loaders
+25.	How to create custom exceptions 
+26.	How you execute a thread 
+
+monjin questions
+
+Why spring boot
+Why hibernate
+SQL queries
+Core java questions
+Marker interface
+
+-why we need an abstract class
+-difference between interface and abstract -> why we need the interface
+-marker interface 
+-classloaders, what are the classloaders?
+-memory? memory errors? How to resolve them?
+
+-Have you worked on prod server?
+-How to troubleshoot prod server issue?
+-Do you use Linux?
+
+-What kind of database did you use?
+-What is inner join?
+
+Hello Himanshu 
+
+These are almost all of the questions that I have been asked by sagar
+
+1. Tell about yourself, current project what sort of project are u working on ? 
+2. what happens when u add @spring boot application annotation into class, what happens in the background?
+3. when u add @springboot application annotation which package it uses by default?
+4. Is it required to specify the component scan also?
+5. spring security: what sort of security do u configure?
+6. for configuring what all we need to: steps to configure?
+7. what is spring boot auto configuration and how does it work?
+8. how can i prevent auto config from configuring my data source ?
+9. scenario : Interface--animal and there are 4 class (Lion, tiger, dog and cat). These 4 classes implement the animal interface. In Myclass autowired animal MyAnimal and referencing it to animal. What will be the type of animal. what will it auto wire to will it be like a lion or tiger or cat or dog?
+10. Stages of entity in Hibernate or life cycle stages of an entity an Hibernate
+11. scenario : I have a bean, as soon as it is loaded i want to write some thing in the log and as soon as it is destroyed i want to write something in the log. How can I do that?
+12. marker interface? Is it similar to annotation?
+13. linked list vs array list and state some real time scenarios of the same
+14. can an interface implement interface? 
+15. How many interfaces can an interface extend?
+16. what is Default methods in java 8? 
+17. scenario: I have interface 1 and a default method, I have another interface called interface 2 and a default method in it, and one more interface 3. Interface 3 extends interface 1 and interface 2. what will happen?
+18. Streams in Java 8 
+1. can we override a static method. 
+2. can we make the abstract class as final 
+3. Spring MVC working flow. 
+4. Explain about collection framework 
+5. Exception handing in rest 
+6. scope of spring beans these are questions he asked outside from your questions.
+
+Thanks,
+Iswarya.
+
+
+
+Iswarya 
+
+On Wed, Apr 18, 2018 at 10:39 AM, Himanshu <Himanshu@empowerprofessionals.com> wrote:
+Hello,
+
+
+1) Tell about yourself
+2) Roles and responsibilities in current project
+3) challenges faced
+4) about web services and a scenario question to explain the approach
+5) what if u find any structural misappropriation in the code, would you fix it or work on top of it. (OOP not followed).
+
+Java technical
+
+1) collection vs collections
+2) multiple inheritance possibility in java
+3) try with resources
+4) maven , how to use it, finding dependencies, transitive dependency, used and unused dependency.
+5) hash set, hash map, tree set, tree map.
+6) spring mvc
+7) repository, component, service,
+8) git , how to use it and git fetch, merge, pull, push, fork.
+9) hibernate configuration
+10) inheriting two interface with similar function.
+11) challenges faced in angular cli.
+12) maven excluding a dependency.
+13) spring boot usage

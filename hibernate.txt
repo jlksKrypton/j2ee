@@ -1,0 +1,220 @@
+1)Create the Persistent class
+Create the mapping file for Persistent class or use annotations
+Create the Configuration file
+Create the class that retrieves or stores the persistent object(dao)
+
+
+1)employee.java:-
+@Entity
+@Table(name="emp500")
+@Cacheable
+@cache(usage=CacheConcurrencyStrategy.READ_ONLY)
+public class Employee {  
+@Id   
+private int id;  
+private String firstName;  
+  
+public int getId() {  
+    return id;  
+}  
+public void setId(int id) {  
+    this.id = id;  
+}  
+public String getFirstName() {  
+    return firstName;  
+}  
+public void setFirstName(String firstName) {  
+    this.firstName = firstName;  
+}  
+}  
+ 
+ 
+ 3) hibernate.cfg.xml:-
+ 
+ <hibernate-configuration>  
+  
+    <session-factory>  
+        <property name="hbm2ddl.auto">update</property>  
+        <property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>  
+        <property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>  
+        <property name="connection.username">system</property>  
+        <property name="connection.password">jtp</property>  
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>  
+		<mapping class="com.javatpoint.Employee"/>  
+    </session-factory>  
+  
+</hibernate-configuration> 
+
+
+4) public class StoreData {    
+public static void main(String[] args) {    
+        
+		Configuration cfg=new Configuration().configure("hibernate.cfg.xml");
+		SessionFactory factory=cfg.buildSessionFactory();    
+		Session session = factory.openSession();  
+		Transaction t = session.beginTransaction();   
+            
+    Employee e1=new Employee();    
+    e1.setId(101);    
+    e1.setFirstName("Gaurav");    
+        
+    session.save(e1);  
+    t.commit();  
+    System.out.println("successfully saved");    
+    factory.close();  
+    session.close();    
+        
+}    
+} 
+
+
+
+table per Hierarchy:-(nullable values possible)
+1)employee.java:-
+@Entity  
+@Table(name = "employee101")  
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
+@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)  
+@DiscriminatorValue(value="employee")  
+
+2) Contract employee:-
+@DiscriminatorValue(value="contract employee")  
+
+
+ 3) hibernate.cfg.xml:-
+<mapping class="com.javatpoint.mypackage.Employee"/>  
+<mapping class="com.javatpoint.mypackage.Regular_Employee"/>  
+<mapping class="com.javatpoint.mypackage.Contract_Employee"/>   
+
+
+
+
+table per Concrete Class:- (duplicate columns in subclasses)
+1)employee.java:-
+@Entity  
+@Table(name = "employee102")  
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) 
+
+2) Contract employee:-
+@AttributeOverrides({  
+    @AttributeOverride(name="id", column=@Column(name="id")),  
+    @AttributeOverride(name="name", column=@Column(name="name"))  
+})  
+
+table per subclasses:-(primary key foreign key relation)
+1)employee.java:- 
+@Entity  
+@Table(name = "employee103")  
+@Inheritance(strategy=InheritanceType.JOINED)  
+
+2) Contract employee:-
+@PrimaryKeyJoinColumn(name="ID")  
+
+
+Collections in hiberanate (one to many and many to many relations)
+
+
+
+question.hbm.xml:-
+
+<list name="answers" table="ans100">  
+          <key column="qid"></key>  
+          <index column="type"></index>  
+          <element column="answer" type="string"></element>  
+</list>  
+		  
+		  
+<list name="answers" >  
+          <key column="qid"></key>  
+          <index column="type"></index>  
+          <one-to-many class="com.javatpoint.Answer" />  
+</list>
+
+
+<map name="answers" table="answer736" cascade="all">  
+<key column="questionid"></key>  
+<index column="answer" type="string"></index>  
+<element column="username" type="string"></element>  
+</map>
+
+one to many:-
+
+1)employee.java:-
+@OneToMany(cascade = CascadeType.ALL)  
+@JoinColumn(name="qid")  
+@OrderColumn(name="type")  
+private List<Answer> answers;
+
+many to many:-
+
+1)employee.java:-
+@ManyToMany(targetEntity = Answer.class, cascade = { CascadeType.ALL })  
+@JoinTable(name = "q_ans1123",   
+            joinColumns = { @JoinColumn(name = "q_id") },   
+            inverseJoinColumns = { @JoinColumn(name = "ans_id") }) 
+private List<Answer> answers;
+
+dao.java:-
+Query query = s.createQuery("from Student s where s.studentName =:nam");
+query.setString("nam", nam);
+list = query.list();
+
+
+
+
+
+Spring Hibernate
+
+hibernateTemplate.save(new Employee(111,"arun",40000));  
+  
+ //hibernate mapping
+
+<hibernate-mapping>  
+<class name="com.javatpoint.Employee" table="emp558">  
+          <id name="id">  
+          <generator class="assigned"></generator>  
+          </id>  
+            
+          <property name="name"></property>  
+          <property name="salary"></property>  
+</class>  
+            
+</hibernate-mapping> 
+  
+  
+  
+  
+//applicationContext.xml
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">  
+        <property name="driverClassName"  value="oracle.jdbc.driver.OracleDriver"></property>  
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>  
+        <property name="username" value="system"></property>  
+        <property name="password" value="oracle"></property>  
+    </bean>  
+      
+    <bean id="mysessionFactory"  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource"></property>  
+          
+        <property name="mappingResources">  
+        <list>  
+        <value>employee.hbm.xml</value>  
+        </list>  
+        </property>  
+          
+        <property name="hibernateProperties">  
+            <props>  
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>  
+                <prop key="hibernate.hbm2ddl.auto">update</prop>  
+                <prop key="hibernate.show_sql">true</prop>  
+                  
+            </props>  
+        </property>  
+    </bean>  
+      
+    <bean id="template" class="org.springframework.orm.hibernate3.HibernateTemplate">  
+    <property name="sessionFactory" ref="mysessionFactory"></property>  
+    </bean>  
+      
+    <bean id="d" class="com.javatpoint.EmployeeDao">  
+    <property name="template" ref="template"></property>  
+    </bean>

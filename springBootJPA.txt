@@ -1,0 +1,25 @@
+pom.xml
+user.java
+
+userservice.java:-
+{
+	@Autowired  
+    private UserRepository userRepository;  
+    public List<UserRecord> getAllUsers(){  
+    List<UserRecord>userRecords = new ArrayList<>();  
+    userRepository.findAll().forEach(userRecords::add); 
+}
+
+userRepository.java:-
+public interface UserRepository extends CrudRepository<UserRecord, String> {  
+}  
+
+UserController.java:- rest controller's
+
+SpringBootJpaApplication.java:-
+@SpringBootApplication  
+public class SpringBootJpaApplication {  
+    public static void main(String[] args) {  
+        SpringApplication.run(SpringBootJpaApplication.class, args);  
+    }  
+}  

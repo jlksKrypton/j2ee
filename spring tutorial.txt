@@ -1,0 +1,215 @@
+1) modules:-
+
+a)test :-
+
+b)Spring core container:-
+
+Core
+beans
+context
+expression language
+
+
+c)Aop
+
+d) Aspects
+
+e) Instrumentation
+
+f) Data Access/ Integration:-
+JDBC
+ORM
+OXM
+JMS
+Transactions
+
+g)WEB/MVC:-
+
+WEB
+Servlet
+Portlet
+Struts
+
+
+
+
+2) creating spring application
+applicationContext.xml:-
+
+<bean id="studentbean" class="com.javatpoint.Student">  
+<property name="name" value="Vimal Jaiswal"></property>  
+</bean>
+
+
+testing class:-
+
+	Resource resource=new ClassPathResource("applicationContext.xml");  
+    BeanFactory factory=new XmlBeanFactory(resource);  
+    Student student=(Student)factory.getBean("studentbean");  
+
+
+	or
+	
+	ApplicationContext context =   
+    new ClassPathXmlApplicationContext("applicationContext.xml");
+	
+	
+3)Dependency Injection:-
+
+a) by constructor:-  
+  
+
+<bean id="q" class="com.javatpoint.Question" parent="e1">  
+
+<constructor-arg value="What is java?" type = "string"></constructor-arg>  
+
+<constructor-arg><list>  
+<value>Java is a programming language</value>  
+<ref bean="ans2"/> 
+</list>  </constructor-arg>
+
+<constructor-arg><map>  
+<entry key="Java is a Programming Language"  value="Ajay Kumar"></entry>  
+<entry key-ref="answer1" value-ref="al"></entry>
+</map></constructor-arg> 
+
+</bean>  
+
+
+b) by setter method:-
+
+<bean id="q" class="com.javatpoint.Question">  
+<property name="id" value="1"></property>  
+
+<property name="answers"><list>
+<value>Java is a programming language</value> 
+<ref bean="answer1"/>
+</list></property> 
+
+
+<property name="answers"><map>  
+<entry key="Java is a programming language"  value="Sonoo Jaiswal"></entry>  
+<entry key-ref="answer2" value-ref="user2"></entry>  
+</map></property> 
+
+</bean> 
+
+
+
+c) Auto wiring:-
+
+<bean id="a" class="org.sssit.A" autowire="byName"></bean>
+<bean id="a" class="org.sssit.A" autowire="byType"></bean>
+<bean id="a" class="org.sssit.A" autowire="constructor"></bean>  
+  
+
+d) Dependency injection with Factory method and Factory bean
+
+
+<bean id="pfactory" class="com.javatpoint.PrintableFactory"></bean>  
+<bean id="p" class="com.javatpoint.PrintableFactory" factory-method="getPrintable"   
+factory-bean="pfactory"></bean> 
+	
+	
+	
+	
+4) Aspect oriented Programming
+
+AOP breaks the program logic into distinct parts (called concerns). 
+It is used to increase modularity by cross-cutting concerns.
+A cross-cutting concern is a concern that can affect the whole application 
+and should be centralized in one location in code as possible, 
+such as transaction management, authentication, logging, security etc.
+
+It provides the pluggable way to dynamically add the additional concern
+before, after or around the actual logic.
+
+
+a) Join point is any point in your program such as method execution, 
+exception handling, field access etc.
+
+
+b) Advice represents an action taken by an aspect at a particular join point.
+
+before
+after returning
+after throwing
+after 
+around
+
+
+c) Pointcuts is an expression language of AOP that matches join points
+
+@Pointcut("execution(* Operation.*(..))")  
+private void doSomething() {}  
+
+d)   Aspect is a class that contains advices, joinpoints etc.
+
+@Aspect  
+public class TrackOperation{  
+    @Pointcut("execution(* Operation.*(..))")  
+    public void k(){}//pointcut name  
+      
+    @Before("k()")//applying pointcut on before advice  
+    public void myadvice(JoinPoint jp)//it is advice (before advice)  
+    {  
+        System.out.println("additional concern");  
+        //System.out.println("Method Signature: "  + jp.getSignature());  
+    }  
+}
+
+
+@Around("abcPointcut()")  
+    public Object myadvice(ProceedingJoinPoint pjp) throws Throwable   
+    {  
+        System.out.println("Additional Concern Before calling actual method");  
+        Object obj=pjp.proceed();  
+        System.out.println("Additional Concern After calling actual method");  
+        return obj;  
+    }  
+	
+	
+<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator">
+
+
+e) Interceptor is an aspect that contains only one advice.
+
+f) AOP Proxy is used to implement aspect contracts, created by AOP framework.
+
+g) Weaving is the process of linking aspect with other objects to create an advised object.
+
+h) Introduction allows you to introduce new interface to any advised object.
+
+i) Target Object is the object i.e. being advised by one or more aspects.
+
+
+5) 
+
+
+
+
+6)    
+
+	
+7) //spring expression language
+
+
+public class Test {  
+public static void main(String[] args) {  
+ExpressionParser parser = new SpelExpressionParser();  
+  
+Expression exp = parser.parseExpression("'Hello SPEL'");  
+String message = (String) exp.getValue();  
+System.out.println(message);  
+//OR  
+//System.out.println(parser.parseExpression("'Hello SPEL'").getValue());  
+}  
+}  
+
+
+8)
+
+
+
+9) 
+

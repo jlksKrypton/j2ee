@@ -1,0 +1,109 @@
+spring Security
+
+a) introduction
+b) features - authentication, authorization
+c) project modules
+d) xml example
+e) java example
+f) login/logout
+g) spring boot
+
+
+a) Spring Security framework supports wide range of authentication models.
+developers want to integrate it with a legacy system that does not follow any security standard,
+there Spring Security works nicely.
+
+Spring Security has numerous advantages. Some of that are given below.
+
+Comprehensive support for authentication and authorization.
+Protection against common tasks
+Servlet API integration
+Integration with Spring MVC
+Portability
+CSRF protection
+Java Configuration support
+
+
+b) features
+
+LDAP (Lightweight Directory Access Protocol)
+Single sign-on
+JAAS (Java Authentication and Authorization Service) LoginModule
+Basic Access Authentication
+Digest Access Authentication
+Remember-me
+Web Form Authentication
+Authorization
+Software Localization
+HTTP Authorization
+OAuth 2.0 Login 
+Reactive Support
+Modernized Password Encoding - DelegatingPasswordEncoder
+
+
+c) project modules
+
+spring-security-core.jar
+spring-security-remoting.jar
+spring-security-web.jar
+spring-security-config.jar
+spring-security-ldap.jar
+spring-security-oauth2-core.jar
+spring-security-oauth2-client.jar
+spring-security-oauth2-jose.jar
+spring-security-acl.jar
+spring-security-cas.jar
+spring-security-openid.jar
+spring-security-test.jar
+
+pom.xml
+home.html
+hello.html
+
+webMvcConfig.java:- (controllers class)
+@Configuration
+public class webMvcConfig implements WebMvcConfigurer {
+
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/home").setViewName("home");
+        registry.addViewController("/").setViewName("home");
+        registry.addViewController("/hello").setViewName("hello");
+        registry.addViewController("/login").setViewName("login");
+    }
+
+}
+
+
+websecurityConfig.java:-
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/", "/home").permitAll()
+                .anyRequest().authenticated()
+                .and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+            .logout()
+                .permitAll();
+    }
+
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        UserDetails user =
+             User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user);
+    }
+}

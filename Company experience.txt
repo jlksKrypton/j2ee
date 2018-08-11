@@ -1,0 +1,69 @@
+I born in 1989
+
+graduated from UC Davis in 2010
+
+2010 to 2013 - ING bank
+480 Washington Blvd, Jersey City, NJ 07310	- 
+newly joined customer gifts
+
+2013 to 2015 - Anthem Insurance company( prior 2014 as WellPoint, Inc.)
+3350 Peachtree Road Atlanta, GA 30326
+Career advancement programs for there employees
+
+
+2015 to 2017 - citi bank
+480 Washington Blvd, Jersey City, NJ 07310	- 
+Employer benefits application
+
+2017 to 2108 - Goldman Sachs Bank
+200 West St, New York, NY 10282  lower manhattan holland tunner  hardson river front
+Goldman Sachs Career application to post jobs by manager
+microservice -springboot, rest api
+there are few others microservice
+mjava8 feature
+
+post is for creating resource not idempotent
+put -. idempotent
+get - idempotent
+delete
+yes but not recommended
+
+
+ Hi this is Suhas,
+ Thank you so much for your time i appreciate that
+ 
+recently worked as java developer with Goldman Sachs in New York
+
+I have been working in this field from 8 Years.
+
+My responsibility includes design and development of web applications by using technologies like Core Java J2EE,
+Spring, spring boot Frameworks,using variousDesign Patterns.
+
+to handle the requests and deliver responses to clients I developed rest end points  for the web application
+
+in order to persist this data in SQl i used the frame work called Hibernate for object relation mapping and 
+
+used jUnit assertJ for unit testing before deploying them in servlet cotainer like Apache Tomcat in local machine or in servers like WebSphere.
+
+I used filters and spring security module's for securing our applications.
+
+and to trace the process to know what's happening when it's actually running i worked with tools like logback log4j with sl4j to provide more flexibility in future
+
+coming to front end I worked with JavaScript , Angular JS, HTML, CSS to integrate with the backend we developed before.
+ 
+and in my projects i worked with jenkins for continuous integration while committing to local or git repositories
+
+and I worked with swagger swagger2markup api's for documention.
+ 
+in all these years i worked in various domains like banking, insurance  
+
+I have worked for some of the clients like Citi Bank, Anthem, ING  Banks.  
+
+Overall I can say that I have a good knowledge in Web application development.
+
+My strength is more on back end when compared to frontend
+
+
+I think that's pretty much i can say about my skills and experience
+
+Is there anything else you want to know

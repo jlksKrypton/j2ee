@@ -1,0 +1,195 @@
+/* 
+ * 1) import packages
+ * 2) load and register data
+ * 3) create a connection
+ * 4) create a statement
+ * 5) execute the query
+ * 6) Process the results
+ * 7) close
+ */
+
+
+import java.sql.*;
+import com.mysql.cj.jdbc.Driver;
+
+public class abc {
+	
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, Exception 
+	{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/sakila","root","Suhas123.");
+		Statement st=con.createStatement();
+		ResultSet rs= st.executeQuery("select * from actor;");
+		while(rs.next())System.out.println(rs.getString(1)+" "+rs.getString(2));
+		st.close();
+		con.close();
+	}
+}
+
+
+
+callable statement:-
+
+//procedure
+create or replace procedure "INSERTR"  
+(id IN NUMBER,  name IN VARCHAR2)  
+is  
+begin  
+insert into user420 values(id,name);  
+end;  
+
+CallableStatement stmt=con.prepareCall("{call insertR(?,?)}");
+
+//function
+create or replace function sum4  
+(n1 in number,n2 in number)  
+return number  
+is   
+temp number(8);  
+begin  
+temp :=n1+n2;  
+return temp;  
+end;  
+
+
+ 
+CallableStatement stmt=con.prepareCall("{?= call sum4(?,?)}");  
+stmt.setInt(2,10);  
+stmt.setInt(3,43);  
+stmt.registerOutParameter(1,Types.INTEGER);  
+stmt.execute();  
+  
+System.out.println(stmt.getInt(1));
+
+
+
+
+
+
+
+
+
+
+
+
+Spring JDBC
+
+
+a) JDBC Template
+
+import org.springframework.jdbc.core.JdbcTemplate;  
+  
+public class EmployeeDao {  
+private JdbcTemplate jdbcTemplate;  
+  
+public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {  
+    this.jdbcTemplate = jdbcTemplate;  
+}  
+  
+public int saveEmployee(Employee e){  
+    String query="insert into employee values('"+e.getId()+"','"+e.getName()+"')";  
+    return jdbcTemplate.update(query);  
+}  
+public int updateEmployee(Employee e){  
+    String query="update employee set   
+    name='"+e.getName()+"',salary='"+e.getSalary()+"' where id='"+e.getId()+"' ";  
+    return jdbcTemplate.update(query);  
+}  
+public int deleteEmployee(Employee e){  
+    String query="delete from employee where id='"+e.getId()+"' ";  
+    return jdbcTemplate.update(query);  
+}  
+  
+}  
+
+//prepared statement
+public Boolean saveEmployeeByPreparedStatement(final Employee e){  
+    String query="insert into employee values(?,?,?)";  
+    return jdbcTemplate.execute(query,new PreparedStatementCallback<Boolean>(){  
+    @Override  
+    public Boolean doInPreparedStatement(PreparedStatement ps)  
+            throws SQLException, DataAccessException {  
+              
+        ps.setInt(1,e.getId());  
+        ps.setString(2,e.getName());  
+        ps.setFloat(3,e.getSalary());  
+              
+        return ps.execute();  
+              
+    }  
+    });  
+	
+//named parameter using namedParameterJdbcTemplate
+ public  void save (Emp e){  
+String query="insert into employee values (:id,:name,:salary)";  
+  
+Map<String,Object> map=new HashMap<String,Object>();  
+map.put("id",e.getId());  
+map.put("name",e.getName());  
+map.put("salary",e.getSalary());  
+  
+template.execute(query,map,new PreparedStatementCallback() {  
+    @Override  
+    public Object doInPreparedStatement(PreparedStatement ps)  
+            throws SQLException, DataAccessException {  
+        return ps.executeUpdate();  
+    }  
+});  
+}  
+
+//simpleJdbcTemplate
+String query="update employee set name=? where id=?";  
+return template.update(query,e.getName(),e.getId());  
+
+ 
+ //result set extractor
+ public List<Employee> getAllEmployees(){  
+ return template.query("select * from employee",new ResultSetExtractor<List<Employee>>(){  
+    @Override  
+     public List<Employee> extractData(ResultSet rs) throws SQLException,  
+            DataAccessException {  
+      
+        List<Employee> list=new ArrayList<Employee>();  
+        while(rs.next()){  
+        Employee e=new Employee();  
+        e.setId(rs.getInt(1));  
+        e.setName(rs.getString(2));  
+        e.setSalary(rs.getInt(3));  
+        list.add(e);  
+        }  
+        return list;  
+        }  
+    });  
+  }  
+  
+
+  //rowmapper extractor
+public List<Employee> getAllEmployeesRowMapper(){  
+ return template.query("select * from employee",new RowMapper<Employee>(){  
+    @Override  
+    public Employee mapRow(ResultSet rs, int rownumber) throws SQLException {  
+        Employee e=new Employee();  
+        e.setId(rs.getInt(1));  
+        e.setName(rs.getString(2));  
+        e.setSalary(rs.getInt(3));  
+        return e;  
+    }  
+    });  
+}  
+	
+
+//application_context.xml
+<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />  
+<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />  
+<property name="username" value="system" />  
+<property name="password" value="oracle" />  
+</bean>  
+  
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+<property name="dataSource" ref="ds"></property>  
+</bean>  
+  
+<bean id="edao" class="com.javatpoint.EmployeeDao">  
+<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+</bean>  
